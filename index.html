@@ -315,7 +315,6 @@ window.addEventListener('keydown', function (e) {
     }
 });
 
-// LOGOUT FUNCTION
 function logout() {
 
     // Optional confirmation
@@ -325,14 +324,14 @@ function logout() {
 
         // Close any open modal
         document.querySelectorAll('.modal').forEach(m => {
-            m.style.display = 'none';
+            m.style.display = "none";
         });
 
         // Success message
         alert("Logged out successfully ✨");
 
-        // Redirect back to cover page
-        window.location.href = "coverpage.html";
+        // Return to previous FileMaker page/layout
+        window.history.back();
     }
 }
 </script>
