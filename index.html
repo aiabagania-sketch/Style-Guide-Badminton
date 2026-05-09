@@ -205,11 +205,15 @@ footer {
 
 <body>
 
+
 <div class="navbar">
     <div class="logo">F.D.B</div>
+
     <div class="nav-links">
-        <a href="coverpage.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="about.html">About</a>
+
+        <!-- LOGOUT BUTTON -->
         <a href="#" onclick="logout()">Logout</a>
     </div>
 </div>
@@ -315,22 +319,25 @@ window.addEventListener('keydown', function (e) {
     }
 });
 
+// LOGOUT FUNCTION
+
+
 function logout() {
 
-    // Optional confirmation
+    // Ask confirmation first
     const confirmLogout = confirm("Are you sure you want to logout? 💖");
 
     if (confirmLogout) {
 
-        // Close any open modal
-        document.querySelectorAll('.modal').forEach(m => {
-            m.style.display = "none";
+        // Close all open modals
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.style.display = "none";
         });
 
         // Success message
         alert("Logged out successfully ✨");
 
-        // Return to previous FileMaker page/layout
+        // Go back to previous FileMaker action/page/layout
         window.history.back();
     }
 }
