@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - F.D.B</title>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body, html {
+    height: 100%;
+  }
+
+  /* BACKGROUND IMAGE */
+  .about-page {
+    height: 100vh;
+    width: 100%;
+
+    /* IMAGE */
+    background: url('download.jpg') no-repeat center/cover;
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* OVERLAY OPACITY */
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); 
+  }
+
+  /* CONTENT BOX */
+  .content {
+    position: relative;
+    max-width: 900px;
+    background: rgba(249, 198, 244, 0.776);
+    padding: 40px;
+    border-radius: 12px;
+    text-align: left;
+    box-shadow: 0 10px 30px rgba(57, 56, 56, 0.2);
+  }
+
+  .content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+  }
+
+  .content h1 span {
+    color: #e06dbc;
+  }
+
+  .content p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #50124a;
+    margin-bottom: 20px;
+  }
+
+  /* HOME BUTTON */
+  .home-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 28px;
+    background: #ff51d9;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: 0.3s;
+  }
+
+  .home-btn:hover {
+    background: #f586d7;
+    transform: translateY(-2px);
+  }
+
+</style>
+</head>
+
+<body>
+
+<div class="about-page">
+
+  <div class="overlay"></div>
+
+  <div class="content">
+    <h1>About <span>F.D.B</span></h1>
+
+    <p>
+      Welcome to FDB — your go-to destination for badminton essentials made for the girlies who play with heart and show up with style. 
+At FDB, we curate everything you need on and off the court — from rackets and shuttlecocks to grip tapes, bags, shoes, and outfits to fit your style! Every product we carry is carefully chosen not just for how it looks, but for how it performs. Because here, you don't have to choose between cute and competitive.
+Whether you're a beginner finding your footing or a seasoned player owning the court, FDB is your partner in the game. We believe that the right gear doesn't just elevate your play — it elevates you as a player.
+    </p>
+
+    <p>
+      "Because real girlies don't just flex — they dominate."
+    </p>
+
+    <!-- HOME BUTTON -->
+    <a href="coverpage.html" class="home-btn">Home</a>
+  </div>
+
+</div>
+
+</body>
+</html>

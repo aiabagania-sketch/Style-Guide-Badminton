@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Table of Contents</title>
+<style>
+
+body {
+  margin: 0;
+  font-family: Georgia, serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Floating Buttons Style */
+.cart-btn, .home-btn {
+  position: absolute;
+  top: 20px;
+  background: #efa2e0;
+  color: rgb(50, 41, 41);
+  font-size: 20px;
+  padding: 8px 12px;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 3px 10px rgba(6, 5, 6, 0.5);
+  transition: 0.3s;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+}
+
+/* HOME BUTTON POSITION */
+.home-btn {
+  left: 20px;
+}
+
+/* CART BUTTON POSITION */
+.cart-btn {
+  right: 20px;
+}
+
+.cart-btn:hover, .home-btn:hover {
+  background: #ff05c0;
+  color: #000;
+  transform: scale(1.1);
+}
+
+/* LEFT SIDE */
+.left {
+  width: 25%;
+  background: linear-gradient(to bottom, #d9d9d9, #efa5da);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid #999;
+}
+
+.left h1 {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 40px;
+  letter-spacing: 5px;
+  color: #ea339e;
+}
+
+/* CENTER */
+.center {
+  width: 75%;
+  padding: 40px 50px;
+  background: linear-gradient(to bottom, #eaeaea, #ffd3e7);
+  overflow-y: auto;
+  position: relative;
+}
+
+/* IMAGE */
+.corner-img {
+  position: absolute;
+  top: 50%;
+  right: 40px;
+  transform: translateY(-50%);
+  width: 140px;
+  opacity: 0.9;
+}
+
+/* ITEMS */
+.item {
+  margin-bottom: 18px;
+}
+
+.item-row {
+  display: flex;
+  align-items: center;
+}
+
+.item-number {
+  font-size: 45px;
+  width: 40px;
+}
+
+.item-text {
+  margin-left: 12px;
+  font-size: 25px;
+  color: #1e3d34;
+}
+
+.view-btn {
+  margin-left: 55px;
+  margin-top: 6px;
+  padding: 5px 10px;
+  font-size: 11px;
+  border: none;
+  background: #ff6ee0;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+.view-btn:hover {
+  background: rgb(237, 86, 227);
+  color: #000;
+}
+</style>
+</head>
+
+<body>
+
+<a href="coverpage.html" class="home-btn" title="Home">🏠</a>
+<a href="cart.html" class="cart-btn" title="Cart">🛒</a>
+
+<div class="container">
+  
+  <div class="left">
+    <h1>TABLE OF CONTENTS</h1>
+  </div>
+
+  <div class="center">
+    <img src="Shuttlecock_bg.jpg" class="corner-img">
+    
+    <div class="item">
+      <div class="item-row">
+        <div class="item-number">1</div>
+        <div class="item-text">Rackets</div>
+      </div>
+      <button class="view-btn" onclick="location.href='rackets.html'">View Page</button>
+    </div>
+
+    <div class="item">
+      <div class="item-row">
+        <div class="item-number">2</div>
+        <div class="item-text">Shuttlecocks</div>
+      </div>
+      <button class="view-btn" onclick="location.href='shuttlecocks.html'">View Page</button>
+    </div>
+
+    <div class="item">
+      <div class="item-row">
+        <div class="item-number">3</div>
+        <div class="item-text">Shoes</div>
+      </div>
+      <button class="view-btn" onclick="location.href='shoes.html'">View Page</button>
+    </div>
+
+    <div class="item">
+      <div class="item-row">
+        <div class="item-number">4</div>
+        <div class="item-text">Bags</div>
+      </div>
+      <button class="view-btn" onclick="location.href='bags.html'">View Page</button>
+    </div>
+
+    <div class="item">
+      <div class="item-row">
+        <div class="item-number">5</div>
+        <div class="item-text">Grips</div>
+      </div>
+      <button class="view-btn" onclick="location.href='grips.html'">View Page</button>
+    </div>
+
+    <div class="item">
+      <div class="item-row">
+        <div class="item-number">6</div>
+        <div class="item-text">Sport Outfits</div>
+      </div>
+      <button class="view-btn" onclick="location.href='outfits.html'">View Page</button>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tumbler Catalog — April 2026</title>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #facaf3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 30px 16px;
+}
+
+/* CLICKABLE TEXT */
+.stripe span {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.stripe span:hover {
+  transform: scale(1.08);
+  text-decoration: underline;
+}
+
+/* POPUP */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 350px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+}
+
+.popup button {
+  margin-top: 15px;
+  padding: 8px 16px;
+  border: none;
+  background: #1e3d34;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.popup button:hover {
+  background: #4fc3f7;
+  color: #000;
+}
+
+/* CATALOG GRID */
+.catalog {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 6px;
+  width: 760px;
+  background: #ccc;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.quad {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 18px 14px;
+  min-height: 340px;
+}
+
+/* COLORS */
+.q1 { background: linear-gradient(145deg, #f4857a, #f9b8a8, #f5c5be); }
+.q2 { background: linear-gradient(145deg, #b8e8f0, #c8f0f8, #d8f5fc); }
+.q3 { background: linear-gradient(145deg, #a8e0b0, #c0eecc, #d8f8e0); }
+.q4 { background: linear-gradient(145deg, #e8b0e8, #f0c8f0, #f8daf8); }
+
+/* ROW */
+.prod-row {
+  display: flex;
+  align-items: center;
+  position: relative;
+  height: 88px;
+}
+
+/* STRIPES */
+.stripe {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  z-index: 1;
+}
+
+.stripe.label-left {
+  justify-content: flex-start;
+  padding-left: 16px;
+}
+
+.stripe.label-right {
+  justify-content: flex-end;
+  padding-right: 16px;
+}
+
+.stripe span {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.stripe.dark-text span { color: #333; }
+
+/* IMAGE */
+.img-box {
+  width: 100px;
+  height: 86px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.prod-row.img-left .img-box { margin-right: auto; }
+.prod-row.img-right .img-box { margin-left: auto; }
+
+.img-box img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(3px 6px 10px rgba(0,0,0,0.22));
+  transform: rotate(-12deg);
+}
+</style>
+</head>
+
+<body>
+
+<div class="catalog">
+
+<!-- Q1 -->
+<div class="quad q1">
+  <div class="prod-row img-left">
+    <div class="stripe label-right dark-text" style="background:#a8c4e8">
+      <span onclick="selectFreebie('Heather')">Heather</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Heather.png"></div>
+  </div>
+
+  <div class="prod-row img-right">
+    <div class="stripe label-left" style="background:#e86858">
+      <span onclick="selectFreebie('Fusion Coral')">Fusion Coral</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Fussion.png"></div>
+  </div>
+
+  <div class="prod-row img-left">
+    <div class="stripe label-right" style="background:#e8d050">
+      <span onclick="selectFreebie('Pomelo')">Pomelo</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Pomelo.png"></div>
+  </div>
+</div>
+
+<!-- Q2 -->
+<div class="quad q2">
+  <div class="prod-row img-right">
+    <div class="stripe label-left" style="background:#1a2240">
+      <span onclick="selectFreebie('Black Croma')">Black Croma</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Black Croma.png"></div>
+  </div>
+
+  <div class="prod-row img-left">
+    <div class="stripe label-right" style="background:#2255cc">
+      <span onclick="selectFreebie('Navy Voyage')">Navy Voyage</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Navy.png"></div>
+  </div>
+
+  <div class="prod-row img-right">
+    <div class="stripe label-left" style="background:#cc1c1c">
+      <span onclick="selectFreebie('Lava Red')">Lava Red</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Lava.png"></div>
+  </div>
+</div>
+
+<!-- Q3 -->
+<div class="quad q3">
+  <div class="prod-row img-left">
+    <div class="stripe label-right" style="background:#8a8a8a">
+      <span onclick="selectFreebie('Ash Gray')">Ash Gray</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Ash Gray.png"></div>
+  </div>
+
+  <div class="prod-row img-right">
+    <div class="stripe label-left" style="background:#228844">
+      <span onclick="selectFreebie('Citrus Lime')">Citrus Lime</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Citrus.png"></div>
+  </div>
+
+  <div class="prod-row img-left">
+    <div class="stripe label-right" style="background:#c07840">
+      <span onclick="selectFreebie('Deep Maple')">Deep Maple</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Deep Maple.png"></div>
+  </div>
+</div>
+
+<!-- Q4 -->
+<div class="quad q4">
+  <div class="prod-row img-right">
+    <div class="stripe label-left dark-text" style="background:#e8e8e8">
+      <span onclick="selectFreebie('Frost White')">Frost White</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Frost.png"></div>
+  </div>
+
+  <div class="prod-row img-left">
+    <div class="stripe label-right" style="background:#e84888">
+      <span onclick="selectFreebie('Peony')">Peony</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Peony.png"></div>
+  </div>
+
+  <div class="prod-row img-right">
+    <div class="stripe label-left" style="background:#9898d8">
+      <span onclick="selectFreebie('Lavender')">Lavender</span>
+    </div>
+    <div class="img-box"><img src="c:\Users\bagob\Downloads\Lavender.png"></div>
+  </div>
+</div>
+
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup">
+    <p id="popupText"></p>
+    <button onclick="goHome()">OK</button>
+  </div>
+</div>
+
+<script>
+let selected = false;
+
+function selectFreebie(name) {
+  if (selected) return;
+  selected = true;
+
+  document.getElementById("popupText").innerHTML =
+    "Thank you for your purchase Girlie!🎉<br><br>" +
+    "Your free tumbler (" + name + ") is on its way.<br><br>" +
+    "Smash hard & stay hydrated! 💖";
+
+  document.getElementById("popup").style.display = "flex";
+}
+
+function goHome() {
+  window.location.href = "coverpage.html";
+}
+</script>
+
+</body>
+</html>

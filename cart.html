@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cart & Checkout</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f8f9fa;
+  padding: 30px;
+}
+
+/* LAYOUT */
+.container {
+  display: flex;
+  width: 900px;
+  margin: auto;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  min-height: 500px;
+  position: relative;
+}
+
+.cart, .summary, .checkout-step {
+  padding: 30px;
+}
+
+.cart { width: 60%; background: #fff; }
+.summary { width: 40%; background: #fdf2f8; border-left: 1px solid #eee; }
+
+.checkout-step { display: none; width: 100%; flex-direction: column; }
+
+/* ITEM STYLES */
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.divider {
+  border-bottom: 1px solid #eee;
+  margin: 10px 0;
+}
+
+.qty-control button {
+  padding: 2px 10px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* FORM STYLES */
+h2 { color: #D63384; margin-bottom: 20px; }
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.payment-options {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.pay-card {
+  flex: 1;
+  padding: 15px 5px;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: #555;
+}
+
+.pay-card i {
+    font-size: 24px;
+}
+
+/* Custom GCash Icon Style */
+.gcash-icon {
+    background: #0056e0;
+    color: white;
+    font-size: 10px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-style: normal;
+}
+
+.pay-card.active { border-color: #D63384; background: #fff0f5; color: #D63384; }
+
+/* BUTTONS */
+.btn-main {
+  width: 100%;
+  padding: 15px;
+  background: #D63384;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.btn-main:hover { background: #b8296e; }
+
+.back-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: #333333;
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-btn:hover {
+  background: #D63384;
+  transform: translateX(10px);
+  box-shadow: 0 8px 20px rgba(214, 51, 132, 0.4);
+}
+
+/* GCASH PORTAL STYLES */
+#gcashPortal {
+    display: none; 
+    position: fixed; 
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.7); 
+    z-index: 9999; 
+    justify-content: center; 
+    align-items: center;
+}
+.gcash-box {
+    background: #f4f4f7; 
+    width: 360px; 
+    border-radius: 15px; 
+    overflow: hidden; 
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+.gcash-header { background: #0056e0; color: white; padding: 20px; text-align: center; font-weight: bold; }
+.gcash-body { padding: 25px; text-align: center; display: none; }
+.gcash-body.active { display: block; }
+.gcash-btn { background: #0056e0; color: white; border: none; width: 100%; padding: 12px; border-radius: 25px; font-weight: bold; cursor: pointer; margin-top: 15px; }
+.qr-code { width: 160px; height: 160px; background: white; margin: 10px auto; padding: 10px; border: 1px solid #ddd; }
+.qr-code img { width: 100%; height: 100%; }
+</style>
+</head>
+
+<body>
+
+<div class="container" id="mainContainer">
+  
+  <div class="cart" id="cartSection">
+    <h2>Shopping Cart 🎀</h2>
+    <div id="cartItems"></div>
+  </div>
+
+  <div class="summary" id="summarySection">
+    <h2>Order Summary</h2>
+    <div id="summaryItems"></div>
+    <div class="divider"></div>
+    <div class="item" style="font-weight: bold; font-size: 1.2rem;">
+        <span>Total</span>
+        <span id="totalPrice">₱0</span>
+    </div>
+    <button class="btn-main" onclick="showShipping()">PROCEED TO CHECKOUT</button>
+  </div>
+
+  <div class="checkout-step" id="shippingSection">
+    <h2>Shipping Information 🚚</h2>
+    <input type="text" id="custName" placeholder="Full Name">
+    <input type="text" id="custAddress" placeholder="Complete Address">
+    <input type="text" id="custPhone" placeholder="Phone Number">
+    <button class="btn-main" onclick="showPayment()">CONTINUE TO PAYMENT</button>
+    <button style="background:none; border:none; color:#666; cursor:pointer; margin-top:10px;" onclick="location.reload()">← Back to Cart</button>
+  </div>
+
+  <div class="checkout-step" id="paymentSection">
+    <h2>Payment Method 💳</h2>
+    <div class="payment-options">
+        <div class="pay-card active" onclick="selectPay(this)">
+            <i class="gcash-icon">G)</i>
+            <span>GCash</span>
+        </div>
+        <div class="pay-card" onclick="selectPay(this)">
+            <i class="fas fa-credit-card"></i>
+            <span>Credit Card</span>
+        </div>
+        <div class="pay-card" onclick="selectPay(this)">
+            <i class="fas fa-motorcycle"></i>
+            <span>COD</span>
+        </div>
+    </div>
+    <div id="cardDetails" style="display:none;">
+        <input type="text" placeholder="Card Number">
+        <div style="display:flex; gap:10px;">
+            <input type="text" placeholder="MM/YY">
+            <input type="text" placeholder="CVV">
+        </div>
+    </div>
+    <button class="btn-main" id="orderBtn" onclick="handleOrderPlacement()">PLACE ORDER ₱<span id="finalAmount">0</span></button>
+  </div>
+
+</div>
+
+<div id="gcashPortal">
+    <div class="gcash-box">
+        <div class="gcash-header">GCash</div>
+        <div class="gcash-body active" id="gc-choice">
+            <p>Select GCash Payment Method</p>
+            <button class="gcash-btn" onclick="showGCStep('gc-login')">Login Mobile Number</button>
+            <button class="gcash-btn" style="background:#444;" onclick="showGCStep('gc-qr')">Scan QR Code</button>
+            <p style="margin-top:10px; font-size:12px; cursor:pointer;" onclick="closeGCash()">Cancel</p>
+        </div>
+        <div class="gcash-body" id="gc-login">
+            <p style="font-size:14px;">Merchant: <b>Badminton Girlies Shop</b></p>
+            <h3>Amount: ₱<span class="gc-total-text">0</span></h3>
+            <div style="display:flex; align-items:center; background:white; border-radius:8px; padding:0 10px; border:1px solid #ddd;">
+                <span>+63</span>
+                <input type="text" placeholder="Mobile number" style="border:none; margin:0;">
+            </div>
+            <button class="gcash-btn" onclick="showGCStep('gc-otp')">NEXT</button>
+        </div>
+        <div class="gcash-body" id="gc-otp">
+            <p>Authentication Code</p>
+            <input type="text" placeholder="6-digit code" style="text-align:center; letter-spacing:5px;">
+            <button class="gcash-btn" onclick="showGCStep('gc-pin')">NEXT</button>
+        </div>
+        <div class="gcash-body" id="gc-pin">
+            <p>Enter 4-digit MPIN</p>
+            <input type="password" placeholder="● ● ● ●" style="text-align:center; font-size:24px;">
+            <button class="gcash-btn" onclick="showGCStep('gc-confirm')">NEXT</button>
+        </div>
+        <div class="gcash-body" id="gc-confirm">
+            <p>Confirm Payment</p>
+            <h2 style="color:#0056e0;">₱<span class="gc-total-text">0</span></h2>
+            <button class="gcash-btn" onclick="processOrder()">PAY NOW</button>
+        </div>
+        <div class="gcash-body" id="gc-qr">
+            <p>Scan to Pay</p>
+            <div class="qr-code">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=GCashPayment" alt="QR">
+            </div>
+            <button class="gcash-btn" onclick="processOrder()">I HAVE SCANNED</button>
+        </div>
+    </div>
+</div>
+
+<div id="notif" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:40px; border-radius:20px; box-shadow:0 0 50px rgba(0,0,0,0.3); text-align:center; z-index:10000; width: 350px;">
+  <h1 style="font-size: 50px;">🎉</h1>
+  <h2>Order Placed!</h2>
+  <p>Thank you for shopping. You can now choose your freebie!</p>
+  <button class="btn-main" onclick="goFreebie()">CLAIM FREEBIE 💖</button>
+</div>
+
+<button class="back-btn" onclick="goBack()">← Back to Shop</button>
+
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [
+    {name: "Pro Racket", price: 2500, qty: 1},
+    {name: "Shuttlecock Pack", price: 450, qty: 2}
+];
+
+let totalGlobal = 0;
+let selectedPaymentMethod = "GCash";
+
+function loadCart() {
+  let cartDiv = document.getElementById("cartItems");
+  let summaryDiv = document.getElementById("summaryItems");
+  totalGlobal = 0;
+  cartDiv.innerHTML = "";
+  summaryDiv.innerHTML = "";
+
+  cart.forEach((item, index) => {
+    let itemTotal = item.price * item.qty;
+    totalGlobal += itemTotal;
+    cartDiv.innerHTML += `<div class="item"><div><strong>${item.name}</strong><br><small>₱${item.price}</small></div><div class="qty-control"><button onclick="updateQty(${index}, -1)">-</button><span>${item.qty}</span><button onclick="updateQty(${index}, 1)">+</button></div><span>₱${itemTotal}</span><button style="border:none; background:none; color:red; cursor:pointer;" onclick="removeItem(${index})">✕</button></div>`;
+    summaryDiv.innerHTML += `<div class="item"><span>${item.name} x${item.qty}</span><span>₱${itemTotal}</span></div>`;
+  });
+
+  document.getElementById("totalPrice").innerText = "₱" + totalGlobal;
+  document.getElementById("finalAmount").innerText = totalGlobal;
+  document.querySelectorAll(".gc-total-text").forEach(el => el.innerText = totalGlobal);
+}
+
+function showShipping() {
+    if(cart.length === 0) return alert("Your cart is empty!");
+    document.getElementById("cartSection").style.display = "none";
+    document.getElementById("summarySection").style.display = "none";
+    document.getElementById("shippingSection").style.display = "flex";
+}
+
+function showPayment() {
+    const name = document.getElementById("custName").value;
+    if(!name) return alert("Please enter shipping details");
+    document.getElementById("shippingSection").style.display = "none";
+    document.getElementById("paymentSection").style.display = "flex";
+}
+
+function selectPay(element) {
+    document.querySelectorAll('.pay-card').forEach(c => c.classList.remove('active'));
+    element.classList.add('active');
+    selectedPaymentMethod = element.querySelector('span').innerText;
+    document.getElementById("cardDetails").style.display = selectedPaymentMethod === "Credit Card" ? "block" : "none";
+}
+
+function handleOrderPlacement() {
+    if (selectedPaymentMethod === "GCash") {
+        document.getElementById("gcashPortal").style.display = "flex";
+    } else {
+        processOrder();
+    }
+}
+
+function showGCStep(stepId) {
+    document.querySelectorAll('.gcash-body').forEach(b => b.classList.remove('active'));
+    document.getElementById(stepId).classList.add('active');
+}
+
+function closeGCash() { document.getElementById("gcashPortal").style.display = "none"; }
+function processOrder() { closeGCash(); document.getElementById("mainContainer").style.opacity = "0.1"; document.getElementById("notif").style.display = "block"; }
+function updateQty(index, change) { cart[index].qty += change; if (cart[index].qty < 1) cart[index].qty = 1; saveCart(); loadCart(); }
+function removeItem(index) { cart.splice(index, 1); saveCart(); loadCart(); }
+function saveCart() { localStorage.setItem("cart", JSON.stringify(cart)); }
+function goFreebie() { localStorage.removeItem("cart"); window.location.href = "freebie.html"; }
+function goBack() { window.location.href = "toc.html"; }
+
+loadCart();
+</script>
+
+</body>
+</html>

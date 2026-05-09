@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bag Catalog — April 2026</title>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f1bbcd 0%, #dbc7e4 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+/* BACK BUTTON */
+.back-btn {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: #bc6bb6;
+  color: white;
+  padding: 10px 20px;
+  font-size: 13px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  z-index: 999;
+}
+
+.back-btn:hover {
+  background: #f08adc;
+  color: #000;
+  transform: translateX(-5px);
+}
+
+/* SEMI-FULL SCREEN CONTAINER */
+.catalog-container {
+  width: 100%;
+  max-width: 1100px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Decorative background circle */
+.catalog-container::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 250px;
+  height: 250px;
+  background: rgba(246, 134, 214, 0.3);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 30px;
+  color: #1e3d34;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* GRID LAYOUT */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+  flex-grow: 1;
+}
+
+.row {
+  background: white;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  transition: 0.3s;
+  border: 1px solid #f0f0f0;
+}
+
+.row:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  border-color: #bc6bb6;
+}
+
+.img-box {
+  width: 130px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+  border-radius: 12px;
+}
+
+.img-box img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  filter: drop-shadow(2px 5px 8px rgba(0,0,0,0.15));
+  cursor: zoom-in;
+}
+
+.prod-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-left: 15px;
+}
+
+.prod-name {
+  font-size: 13px;
+  font-weight: 800;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+/* SPECS AREA */
+.specs {
+  font-size: 10px;
+  color: #666;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.specs span {
+  display: inline-block;
+  background: #fdf2f8;
+  color: #d63384;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-right: 4px;
+  font-weight: 600;
+  border: 1px solid #fbcfe8;
+}
+
+.price-pill {
+  font-size: 15px;
+  font-weight: 800;
+  color: #1e3d34;
+  margin-bottom: 10px;
+}
+
+/* ADD TO CART BUTTON */
+.add-btn {
+  width: fit-content;
+  padding: 8px 16px;
+  font-size: 10px;
+  font-weight: 700;
+  border: none;
+  border-radius: 30px;
+  background: #f252cd;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+  text-transform: uppercase;
+}
+
+.add-btn:hover {
+  background: #bc6bb6;
+  box-shadow: 0 5px 15px rgba(242, 82, 205, 0.4);
+}
+
+/* CENTERED FOOTER */
+.section-footer {
+  width: 100%;
+  margin-top: 40px;
+  padding-top: 10px;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #760f5b;
+  position: relative;
+  z-index: 1;
+}
+
+/* LIGHTBOX */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.lightbox img {
+  max-width: 85%;
+  max-height: 85%;
+  border-radius: 10px;
+}
+
+.lightbox.active { display: flex; }
+</style>
+</head>
+
+<body>
+
+<a href="toc.html" class="back-btn">← Back to Menu</a>
+
+<div class="catalog-container">
+    <h1>🎒 PREMIUM BADMINTON BAGS</h1>
+
+    <div class="grid">
+        <div class="row">
+          <div class="img-box"><img src="c:\Users\bagob\Downloads\YONEX BP BW.png"></div>
+          <div class="prod-info">
+            <div class="prod-name">Yonex Backpack BW</div>
+            <div class="specs"><span>Dual Zip</span> <span>Compact</span> Black & White</div>
+            <div class="price-pill">₱969</div>
+            <button class="add-btn" onclick="addToCart('Yonex Backpack BW', 969)">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="img-box"><img src="c:\Users\bagob\Downloads\YONEX Green WG.png"></div>
+          <div class="prod-info">
+            <div class="prod-name">Yonex Bag 82426 WG</div>
+            <div class="specs"><span>3-Racket</span> <span>Light</span> Forest Green</div>
+            <div class="price-pill">₱483</div>
+            <button class="add-btn" onclick="addToCart('Yonex Bag 82426 WG', 483)">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="img-box"><img src="c:\Users\bagob\Downloads\YONEX Ultra.png"></div>
+          <div class="prod-info">
+            <div class="prod-name">Yonex Ultra 89 WP</div>
+            <div class="specs"><span>Thermal Lining</span> <span>Large</span> Pro Series</div>
+            <div class="price-pill">₱1,089</div>
+            <button class="add-btn" onclick="addToCart('Yonex Ultra 89 WP', 1089)">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="img-box"><img src="c:\Users\bagob\Downloads\YONEX BP SMOKE Green.png"></div>
+          <div class="prod-info">
+            <div class="prod-name">Yonex Smoked Mint 12 EX</div>
+            <div class="specs"><span>Ergonomic</span> <span>Waterproof</span> Smoked Mint</div>
+            <div class="price-pill">₱1,888</div>
+            <button class="add-btn" onclick="addToCart('Yonex Smoked Mint 12 EX', 1888)">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="img-box"><img src="c:\Users\bagob\Downloads\Victor Aqua.png"></div>
+          <div class="prod-info">
+            <div class="prod-name">Victor Aqua BR 82196</div>
+            <div class="specs"><span>Ventilated</span> <span>Aqua Blue</span> Shoe Pocket</div>
+            <div class="price-pill">₱1,659</div>
+            <button class="add-btn" onclick="addToCart('Victor Aqua BR 82196', 1659)">Add to Cart</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="img-box"><img src="c:\Users\bagob\Downloads\YONEX Vanilla.png"></div>
+          <div class="prod-info">
+            <div class="prod-name">Yonex Vanilla 02531</div>
+            <div class="specs"><span>Soft Touch</span> <span>Stylish</span> Everyday Carry</div>
+            <div class="price-pill">₱1,728</div>
+            <button class="add-btn" onclick="addToCart('Yonex Vanilla 02531', 1728)">Add to Cart</button>
+          </div>
+        </div>
+    </div>
+
+    <div class="section-footer">EST. 2026 // POWERED BY F.D.B SHOP</div>
+</div>
+
+<div class="lightbox" id="lightbox">
+    <img id="lightImg">
+</div>
+
+<script>
+// Lightbox Logic
+const images = document.querySelectorAll('.img-box img');
+const lightbox = document.getElementById('lightbox');
+const lightImg = document.getElementById('lightImg');
+
+images.forEach(img => {
+  img.onclick = () => {
+    lightImg.src = img.src;
+    lightbox.classList.add('active');
+  };
+});
+
+lightbox.onclick = () => {
+  lightbox.classList.remove('active');
+};
+
+// Cart Logic
+function addToCart(name, price) {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let existing = cart.find(item => item.name === name);
+
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({ name: name, price: price, qty: 1 });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("✨ " + name + " has been added to your cart!");
+}
+</script>
+
+</body>
+</html>
